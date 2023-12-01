@@ -1,4 +1,4 @@
-import { copyFileSync, mkdirSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync } from 'fs';
 import solution from './solution';
 
 process.argv.splice(0, 2);
@@ -16,18 +16,20 @@ switch (args[0]?.toLowerCase()) {
     console.log(solution[`part${args[1]}` as 'part1' | 'part2'](input));
     break;
   case 'input':
-    fetch(`https://adventofcode.com/${config.year}/day/${config.day}/input`, { headers: { Cookie: `session=${process.env.SESSION};` } })
+    fetch(`https://adventofcode.com/${config.year}/day/${config.day}/input`, {
+      headers: { Cookie: `session=${process.env.SESSION};` },
+    })
       .then((res) => res.text())
       .then(async (data) => {
-        if (!(await Bun.file('./solutions').exists())) mkdirSync(`./solutions`);
-        if (!(await Bun.file(`./solutions/day-${config.day}`).exists())) mkdirSync(`./solutions/day-${config.day}`);
+        if (!existsSync('./solutions')) mkdirSync(`./solutions`);
+        if (!existsSync(`./solutions/day-${config.day}`)) mkdirSync(`./solutions/day-${config.day}`);
         Bun.write(`./solutions/day-${config.day}/input.txt`, data.trim());
       })
       .catch(console.error);
     break;
   case 'save':
-    if (!(await Bun.file('./solutions').exists())) mkdirSync(`./solutions`);
-    if (!(await Bun.file(`./solutions/day-${config.day}`).exists())) mkdirSync(`./solutions/day-${config.day}`);
+    if (!existsSync('./solutions')) mkdirSync(`./solutions`);
+    if (!existsSync(`./solutions/day-${config.day}`)) mkdirSync(`./solutions/day-${config.day}`);
     copyFileSync(`./solution.ts`, `./solutions/day-${config.day}/solution.ts`);
     console.log('Done');
     break;
