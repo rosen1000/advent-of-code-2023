@@ -37,13 +37,14 @@ switch (args[0]?.toLowerCase()) {
     Bun.write(
       './solution.ts',
       `export default {
-  part1: (input: string): number => {
+  part1: (_input: string): number => {
     return 0;
   },
-  part2: (input: string): number => {
+  part2: (_input: string): number => {
     return 0;
   },
-}`
+}
+`
     );
     console.log('Done');
     break;
