@@ -49,7 +49,7 @@ switch (args[0]?.toLowerCase()) {
     console.log('Done');
     break;
   case 'load':
-    copyFileSync(`./solutions/day-${args[1]}/solution.ts`, './solution.ts');
+    copyFileSync(`./solutions/day-${config.day}/solution.ts`, './solution.ts');
     console.log('Done');
     break;
   default:
